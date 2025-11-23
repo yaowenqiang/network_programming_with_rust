@@ -1,0 +1,7 @@
+[package]
+name = "network_programming_with_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+term = "1.2.0"
