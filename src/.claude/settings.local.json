@@ -3,7 +3,10 @@
     "allow": [
       "Bash(rustc:*)",
       "Bash(./syntactic-macro.rs)",
-      "Bash(./syntactic-macro:*)"
+      "Bash(./syntactic-macro:*)",
+      "Bash(./string_examples:*)",
+      "Bash(./string_types_comparison)",
+      "Bash(./str_explanation)"
     ],
     "deny": [],
     "ask": []
