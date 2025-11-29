@@ -1,1 +1,6 @@
 /target
+factorial/target/
+enhanced_debug.dSYM/
+src/str_explanation.dSYM/
+simple_test.dSYM
+src/debug_example.dSYM

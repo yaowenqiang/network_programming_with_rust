@@ -6,7 +6,12 @@
       "Bash(./syntactic-macro:*)",
       "Bash(./string_examples:*)",
       "Bash(./string_types_comparison)",
-      "Bash(./str_explanation)"
+      "Bash(./str_explanation)",
+      "Bash(gdb:*)",
+      "Bash(chmod:*)",
+      "Bash(./gdb_demo.sh:*)",
+      "Bash(brew install:*)",
+      "Bash(HOMEBREW_NO_AUTO_UPDATE=1 brew install:*)"
     ],
     "deny": [],
     "ask": []
