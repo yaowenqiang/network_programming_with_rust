@@ -1,0 +1,9 @@
+[package]
+name = "letter-example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+lettre = "0.11.19"
+native-tls = "0.2.14"
+uuid = "1.19.0"
