@@ -1,0 +1,7 @@
+[package]
+name = "tftp-example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tftp_server = "0.0.2"
