@@ -1,7 +1,12 @@
+use std::io::Read;
 use std::net::TcpListener;
 #[derive(Debug)]
 pub struct Server {
     addr: String,
+}
+
+fn arr(a: &[u8]) {
+    
 }
 
 impl Server {
@@ -18,9 +23,18 @@ impl Server {
 
        loop {
            match listener.accept() {
-               Ok((stream, addr)) => {
-                   let a = 5;
-                   print!("Ok");
+               Ok((mut stream, _)) => {
+                   //let a = [1,2,3,4, 5,7 ];
+                   //arr(&a[1..3]);
+
+                   let mut buffer = [0; 1024];
+
+                   match stream.read(&mut buffer) {
+                       Ok(_) => {
+                           println!("Received a request: {}", String::from_utf8_lossy(&buffer));
+                       },
+                       Err(e) => println!("Failed to read from conneciont: {}", e),
+                   }
                },
                Err(e) => {
                    println!("Failed to establish  a connection: {:?}", e);
