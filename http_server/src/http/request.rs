@@ -5,12 +5,13 @@ use std::error::Error;
 use std::fmt::{Result as FmtResult, Display,Debug,Formatter};
 use std::str;
 #[derive(Debug)]
-pub struct Request {
-    path: String,
-    query_string: Option<String>,
+pub struct Request<'buff> {
+    path: &'buff str,
+    query_string: Option<&'buff str>,
     //method: super::method::Method,
     method: Method,
 }
+/*
 
 impl Request {
 
@@ -20,11 +21,12 @@ impl Request {
     }
     */
 }
+*/
 
-impl TryFrom<&[u8]> for Request {
+impl<'buf>TryFrom<&'buf [u8]> for Request<'buf> {
     type Error = ParseError;
 
-    fn try_from(buf: &[u8]) -> Result<Self, Self::Error> {
+    fn try_from(buf: &'buf [u8]) -> Result<Request<'buf>, Self::Error> {
         /*
         match str::from_utf8(buf) {
             Ok(request) => {},
@@ -77,12 +79,12 @@ impl TryFrom<&[u8]> for Request {
         */
 
         if let Some(i) = path.find("?") {
-            query_string = Some(path[i+1..].to_string());
+            query_string = Some(&path[i+1..]);
             path = &path[..i];
         }
 
         Ok(Self {
-            path: path.to_string(),
+            path,
             query_string,
             method,
         })
