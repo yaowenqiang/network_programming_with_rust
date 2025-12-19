@@ -1,7 +1,7 @@
-use std::fmt::{Display, Fomatter, Result as FmtResult};
+use std::fmt::{Display, Formatter, Result as FmtResult};
 
 
-#[derive[Copy, Clone, Debug]]
+#[derive(Copy, Clone, Debug)]
 pub enum StatusCode {
     OK = 200,
     BadRequest = 400,
@@ -11,7 +11,7 @@ pub enum StatusCode {
 impl StatusCode {
     pub fn reason_phrase(&self) -> &str {
         match self {
-            Self::Ok => "OK",
+            Self::OK => "OK",
             Self::BadRequest =>"Bad BadRequest",
             Self::NotFound => "Not Found",
         }
