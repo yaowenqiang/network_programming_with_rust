@@ -31,24 +31,31 @@ impl Server {
                     match stream.read_exact(&mut buffer) {
                         Ok(_) => {
                             println!("Received a request: {}", String::from_utf8_lossy(&buffer));
-                            match Request::try_from(&buffer[..]) {
+                            let response = match Request::try_from(&buffer[..]) {
                                 Ok(request) => {
                                     dbg!(request);
                                     //let response = Response::new(StatusCode::NotFound, None);
-                                    let response = Response::new(StatusCode::OK, 
-                                        Some("<h1>It works!</h1>".to_string()));
-                                    //write!(stream, "HTTP/1.1 404 Not Found\r\n");
-                                    write!(stream, "{}",response);
+                                    Response::new(
+                                        StatusCode::OK,
+                                        Some("<h1>It works!</h1>".to_string()),
+                                    )
                                 }
-                                Err(e) => println!("Failed to parse a request: {e}"),
+                                Err(e) => {
+                                    println!("Failed to parse a request: {e}");
+                                    Response::new(StatusCode::BadRequest, None)
+                                }
+                            };
+                            if let Err(e) = response.send(&mut stream) {
+                                println!("Failed to send response: {}", e);
+                                Response::new(StatusCode::BadRequest, None);
                             }
-                            //let res :&Result<Request, _> = &buffer[..].try_into();
                         }
                         Err(e) => println!("Failed to read from connecion: {e}"),
                     }
                 }
                 Err(e) => {
-                    println!("Failed to establish  a connection: {e:?}");
+                    println!("Failed to establish a connection: {e:?}");
+                    //Response::new(StatusCode::BadRequest, None).send(&mut stream);
                 }
             }
             /*
