@@ -5,8 +5,13 @@ use http::Method;
 use http::Request;
 use server::Server;
 
+
+use website_handler::WebsiteHandler;
+
+
 mod server;
 mod http;
+mod website_handler;
 
 fn main() {
     /*
@@ -33,5 +38,5 @@ fn main() {
     //let put = Method::PUT;
     
     let mut server = Server::new("127.0.0.1:8180".to_string());
-    server.run();
+    server.run(WebsiteHandler);
 }
