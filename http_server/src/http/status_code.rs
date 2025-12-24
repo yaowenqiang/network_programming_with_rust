@@ -12,7 +12,7 @@ impl StatusCode {
     pub fn reason_phrase(&self) -> &str {
         match self {
             Self::OK => "OK",
-            Self::BadRequest =>"Bad BadRequest",
+            Self::BadRequest =>"Bad Request",
             Self::NotFound => "Not Found",
         }
     }

@@ -107,25 +107,23 @@ impl<'buf>TryFrom<&'buf [u8]> for Request<'buf> {
 }
 
 fn get_next_word(request: &str) -> Option<(&str, &str)> {
-    /*
-    let mut iter = request.chars();
+    let mut iter = request.chars().enumerate();
+    // Skip leading whitespace
     loop {
-        let item = iter.next();
-        match item {
-            Some(c) => {},
-            None => break;
+        match iter.next() {
+            Some((_, c)) if c == ' ' || c == '\r' || c == '\n' => continue,
+            Some((i, _)) => {
+                // Found start of word, now find the end
+                for (j, c) in iter {
+                    if c == ' ' || c == '\r' || c == '\n' {
+                        return Some((&request[i..j], &request[j..]));
+                    }
+                }
+                return Some((&request[i..], ""));
+            }
+            None => return None,
         }
     }
-    */
-
-    for (i,c) in request.chars().enumerate() {
-        if c == ' ' || c == '\n' {
-            return Some((&request[..i], &request[i+1..]));
-        }
-    }
-
-    None
-
 }
 
 pub enum ParseError {

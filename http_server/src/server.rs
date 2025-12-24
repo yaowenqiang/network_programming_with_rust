@@ -37,10 +37,12 @@ impl Server {
 
                     let mut buffer = [0; 1024];
 
-                    match stream.read_exact(&mut buffer) {
-                        Ok(_) => {
-                            println!("Received a request: {}", String::from_utf8_lossy(&buffer));
-                            let response = match Request::try_from(&buffer[..]) {
+                    match stream.read(&mut buffer) {
+                        Ok(bytes_read) => {
+                            let request_str = String::from_utf8_lossy(&buffer[..bytes_read]);
+                            println!("Received {} bytes", bytes_read);
+                            println!("Raw request: {:?}", &request_str[..request_str.chars().count().min(200)]);
+                            let response = match Request::try_from(&buffer[..bytes_read]) {
                                 Ok(request) => {
                                     //dbg!(request);
                                     //let response = Response::new(StatusCode::NotFound, None);
@@ -62,10 +64,9 @@ impl Server {
                             };
                             if let Err(e) = response.send(&mut stream) {
                                 println!("Failed to send response: {}", e);
-                                Response::new(StatusCode::BadRequest, None);
                             }
                         }
-                        Err(e) => println!("Failed to read from connecion: {e}"),
+                        Err(e) => println!("Failed to read from connection: {e}"),
                     }
                 }
                 Err(e) => {
